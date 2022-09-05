@@ -4,17 +4,11 @@ from os.path import isdir
 class YouTubeDownloader:
     import csv
     from pytube import YouTube, Playlist
-    from pytube.cli import on_progress
-    from pytube.helpers import safe_filename
     from os import system
 
 
 
     def __init__(self, link, directory):
-        import csv
-        from pytube import YouTube, Playlist
-        
-        from os import system
         self.clear = lambda: self.system('clear')
         self.titulo= ''
         self.directory = directory
