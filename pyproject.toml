@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "youtube-downloader"
+version = "0.1.0"
+description = ""
+authors = ["Bruno Lemes <bruno29batista@gmail.com>"]
+readme = "README.md"
+packages = [{include = "youtube_downloader"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pytube = "^12.1.0"
+
+
+[tool.poetry.group.dev.dependencies]
+blue = "^0.9.1"
+isort = "^5.10.1"
+prospector = "^1.7.7"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
