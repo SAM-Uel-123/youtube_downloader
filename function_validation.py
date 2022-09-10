@@ -3,17 +3,17 @@
 #pylint: disable=missing-function-docstring
 
 
-class Validation:
-    def __init__(self):
-        return None
+class InputValidation:
+    def __init__(self = None):
+        self.domains = ['https://www.youtube.com/', 'https://youtu.be/']
 
 
-    def val_link(self = None, link: str = ''):
+    def val_link(self, link: str = ''):
         tmp_link = str(link)
         tmp_link2 = ''
         if link:
-            domains = ['https://www.youtube.com/', 'https://youtu.be/']
-            for domain in domains:
+
+            for domain in self.domains:
                 if domain in tmp_link:
                     tmp_link2 = tmp_link.replace(domain, '')
                     if len(tmp_link2) > 0:
@@ -22,12 +22,7 @@ class Validation:
         return False
 
 
-class InputValidation:
-    def __init__(self):
-        return None
-
-
-    def input_int(self = None, msg= ''):
+    def input_int(self, msg= ''):
         valor = None
         while True:
             try:
@@ -41,7 +36,7 @@ class InputValidation:
                 return valor
 
 
-    def input_float(self = None, msg= ''):
+    def input_float(self, msg= ''):
         valor = None
         while True:
             try:
@@ -55,7 +50,7 @@ class InputValidation:
                 return valor
 
 
-    def input_string(self = None, msg= '', opcs = None, lower = 0, upper = 0):
+    def input_string(self, msg= '', opcs = None, lower = 0, upper = 0):
         if not opcs:
             opcs = []
 

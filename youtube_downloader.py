@@ -4,12 +4,12 @@
 #pylint: disable=import-error
 
 import csv
-from os import system
 from os.path import isdir
+from os import system
 from pytube import YouTube, Playlist
 from pytube.cli import on_progress
 from pytube.helpers import safe_filename
-from function_validation import Validation, InputValidation
+from function_validation import InputValidation
 
 
 class YouTubeDownloader:
@@ -18,6 +18,7 @@ class YouTubeDownloader:
         self.titulo= ''
         self.directory = directory
         self.link = link
+        self.input_validation = InputValidation()
         if link:
             self.__atualizar_caches()
 
@@ -85,7 +86,7 @@ class YouTubeDownloader:
     def __video_download(self, link, directory= './'):
         log= 0
         erro = None
-        if Validation.val_link(link):
+        if self.input_validation.val_link(link):
             try:
                 obj_youtube = YouTube(link, on_progress_callback= on_progress)
                 titulo= obj_youtube.title
@@ -113,7 +114,7 @@ class YouTubeDownloader:
 
     def __audio_download(self, link, directory= './'):
         log= 0
-        if Validation.val_link(link):
+        if InputValidation.val_link(link):
             try:
                 obj_youtube = YouTube(link, on_progress_callback = on_progress)
                 titulo = safe_filename(obj_youtube.title)
@@ -179,9 +180,11 @@ class YouTubeDownloader:
             tmp_directory = input('Novo diretorio: ')
             if tmp_directory:
                 if isdir(tmp_directory):
-                    confirmar = InputValidation.input_string(\
-                        'Deseja confirmar o novo diretorio? [S/N]', \
-                        opcs=['s', 'n'], lower=1)
+                    confirmar = self.input_validation.input_string(\
+                        'Deseja confirmar o novo diretorio? [S/N]',
+                        ['s', 'n'],
+                        1
+                        )
 
                     if confirmar == 's':
                         self.directory = tmp_directory
@@ -195,8 +198,11 @@ class YouTubeDownloader:
                 print('ERROR. Directory not exist.')
 
             else:
-                confirmar = InputValidation.input_string('Deseja cancelar o diretorio? [S/N]: ',\
-                    opcs=['s', 'n'], lower=0)
+                confirmar = self.input_validation.input_string(\
+                    'Deseja cancelar o diretorio? [S/N]: ',
+                    ['s', 'n'],
+                    0
+                    )
 
                 if confirmar == 's':
                     break
@@ -213,8 +219,9 @@ class YouTubeDownloader:
             tmp_link = input('Novo link: ')
             if tmp_link:
                 if Validation.val_link(tmp_link):
-                    confirmar = InputValidation.input_string(\
-                        'Deseja confirmar o novo link? [S/N]: ', opcs=['s', 'n'], lower=1)
+                    confirmar = self.input_validation.input_string(\
+                        'Deseja confirmar o novo link? [S/N]: ',
+                        ['s', 'n'], 1)
 
                     if confirmar == 's':
                         self.link = tmp_link
@@ -227,8 +234,9 @@ class YouTubeDownloader:
 
 
             else:
-                confirmar = InputValidation.input_string(\
-                    'Deseja cancelar o link de download? [S/N]: ', opcs=['s', 'n'], lower=0)
+                confirmar = self.input_validation.input_string(\
+                    'Deseja cancelar o link de download? [S/N]: ',
+                    ['s', 'n'], 0)
 
                 if confirmar == 's':
                     break
@@ -239,8 +247,9 @@ class YouTubeDownloader:
             try:
                 file_addres = input('Endereco do arquivo: ')
                 if not file_addres:
-                    confirmar = InputValidation.input_string(\
-                        'Deseja cancelar o link de download? [S/N]: ', opcs=['s', 'n'], lower=0)
+                    confirmar = self.input_validation.input_string(\
+                        'Deseja cancelar o link de download? [S/N]: ',
+                        ['s', 'n'], 0)
 
                     if confirmar == 's':
                         break

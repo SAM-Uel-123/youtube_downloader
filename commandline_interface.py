@@ -21,10 +21,10 @@ class Cli:
 
 
     def clear(self = None):
-        system('CLEAR')
+        system('clear')
 
 
-if __name__ != '__main__':
+if __name__ == '__main__':
     # =============================== #
     # - Variaveis e objetos globais - #
     # =============================== #
@@ -32,12 +32,12 @@ if __name__ != '__main__':
     LINK = None
     DIRECTORY = './'
     LIMPAR = 1
-
+    InputValidation = InputValidation()
     if LIMPAR:
         CLEAR()
 
     if not LINK:
-        LINK = input(' LINK: ')
+        LINK = input(' link: ')
 
     downloader = YouTubeDownloader(LINK, DIRECTORY)
 
