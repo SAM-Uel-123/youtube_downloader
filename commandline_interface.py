@@ -1,47 +1,58 @@
-class cli:
-    def linhas(msg= '', linha= '='):
+#pylint: disable=missing-module-docstring
+#pylint: disable=missing-class-docstring
+#pylint: disable=missing-function-docstring
+
+# ============================== #
+#       - Importações -          #
+# ============================== #
+
+from os import system
+from youtube_downloader import YouTubeDownloader
+from function_validation import InputValidation
+
+class Cli:
+    def __init__(self):
+        return None
+
+    def linhas(self, msg= '', linha= '='):
         print(linha * 60)
         print(f'{msg:^60}')
         print(linha * 60)
 
 
+    def clear(self = None):
+        system('CLEAR')
 
-if __name__ == '__main__':
-    # ============================== #
-    #       - Importações -          #
-    # ============================== #
-    from os import system
-    from YouTubeDownloader import *
-    from function_validation import *
 
+if __name__ != '__main__':
     # =============================== #
     # - Variaveis e objetos globais - #
     # =============================== #
-    clear = lambda: system('clear')
-    link = None
-    directory = './'
-    limpar = 1
+    CLEAR = Cli.clear
+    LINK = None
+    DIRECTORY = './'
+    LIMPAR = 1
 
-    if limpar:
-        clear()
+    if LIMPAR:
+        CLEAR()
 
-    if not link:
-        link = input(' Link: ')
+    if not LINK:
+        LINK = input(' LINK: ')
 
-    downloader = YouTubeDownloader(link, directory)
+    downloader = YouTubeDownloader(LINK, DIRECTORY)
 
 
     # ================== #
     # - Loop principal - #
     # ================== #
     while True:
-        if limpar:
-            clear()
+        if LIMPAR:
+            CLEAR()
 
-        cli.linhas('Downloader for YouTube Videos')
+        Cli.linhas('Downloader for YouTube Videos')
 
         # ==================================================== #
-        # - Mostra o(s) titulo(s) do link(s) que você passou - #
+        # - Mostra o(s) titulo(s) do LINK(s) que você passou - #
         # ==================================================== #
         if downloader.titulo:
             print('\n', '-=' * 30)
@@ -58,17 +69,17 @@ if __name__ == '__main__':
         # - Opções para baixar o video/audio - #
         # ==================================== #
         print('''
-    1 - Baixar Video(s)
-    2 - Baixar Audios(s)    
-    3 - Escolher diretorio de saida
-    4 - Ler arquivo com links
-    5 - Trocar o link de download
+1 - Baixar Video(s)
+2 - Baixar Audios(s)    
+3 - Escolher diretorio de saida
+4 - Ler arquivo com LINKs
+5 - Trocar o LINK de download
 
-    0 - Sair
+0 - Sair
 
     ''')
-        opc = input_validation.inputValInt(' Opção: ')
-            
+        opc = InputValidation.input_int(' Opção: ')
+
         if opc == 0:
             break
 
@@ -86,7 +97,7 @@ if __name__ == '__main__':
 
         elif opc == 5:
             downloader.change_link(atualizar_caches= 1)
-            
+
         else:
             print(' Opção invalida.')
 
