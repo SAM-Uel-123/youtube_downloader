@@ -81,6 +81,7 @@ class YouTubeDownloader:
 
         return log
 
+
     def __video_download(self, link, directory= './'):
         log= 0
         erro = None
@@ -137,6 +138,7 @@ class YouTubeDownloader:
 
         return log
 
+
     def __playlist_download(self, link, directory= './', only_audio= 0 ):
         log= 0
         if Validation.val_link(link):
@@ -164,6 +166,7 @@ class YouTubeDownloader:
             log= 1
 
         return log
+
 
     def change_directory(self, limpar = 1):
         while True:
@@ -199,7 +202,6 @@ class YouTubeDownloader:
                     break
 
 
-
     def change_link(self, limpar = 1, atualizar_caches= 0):
         while True:
             if limpar:
@@ -230,6 +232,7 @@ class YouTubeDownloader:
 
                 if confirmar == 's':
                     break
+
 
     def read_file(self):
         while True:

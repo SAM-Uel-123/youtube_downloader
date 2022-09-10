@@ -1,10 +1,14 @@
 #pylint: disable=missing-module-docstring
 #pylint: disable=missing-class-docstring
 #pylint: disable=missing-function-docstring
-#pylint: disable=no-self-argument
+
 
 class Validation:
-    def val_link(link: str = ''):
+    def __init__(self):
+        return None
+
+
+    def val_link(self = None, link: str = ''):
         tmp_link = str(link)
         tmp_link2 = ''
         if link:
@@ -19,7 +23,11 @@ class Validation:
 
 
 class InputValidation:
-    def input_int(msg= ''):
+    def __init__(self):
+        return None
+
+
+    def input_int(self = None, msg= ''):
         valor = None
         while True:
             try:
@@ -33,7 +41,7 @@ class InputValidation:
                 return valor
 
 
-    def input_float(msg= ''):
+    def input_float(self = None, msg= ''):
         valor = None
         while True:
             try:
@@ -46,7 +54,8 @@ class InputValidation:
             else:
                 return valor
 
-    def input_string(msg= '', opcs = None, lower = 0, upper = 0):
+
+    def input_string(self = None, msg= '', opcs = None, lower = 0, upper = 0):
         if not opcs:
             opcs = []
 
