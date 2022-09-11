@@ -4,25 +4,11 @@
 
 
 class InputValidation:
-    def __init__(self = None):
+    def __init__(self) -> None:
         self.domains = ['https://www.youtube.com/', 'https://youtu.be/']
 
 
-    def val_link(self, link: str = ''):
-        tmp_link = str(link)
-        tmp_link2 = ''
-        if link:
-
-            for domain in self.domains:
-                if domain in tmp_link:
-                    tmp_link2 = tmp_link.replace(domain, '')
-                    if len(tmp_link2) > 0:
-                        return True
-
-        return False
-
-
-    def input_int(self, msg= ''):
+    def input_int(self, msg: str= '') -> int:
         valor = None
         while True:
             try:
@@ -36,7 +22,7 @@ class InputValidation:
                 return valor
 
 
-    def input_float(self, msg= ''):
+    def input_float(self, msg: str= '') -> float:
         valor = None
         while True:
             try:
@@ -50,7 +36,7 @@ class InputValidation:
                 return valor
 
 
-    def input_string(self, msg= '', opcs = None, lower = 0, upper = 0):
+    def input_string(self, msg= '', opcs = None, lower = 0, upper = 0) -> str:
         if not opcs:
             opcs = []
 
@@ -76,3 +62,17 @@ class InputValidation:
 
             else:
                 return valor
+
+
+    def val_link(self, link= '') -> bool:
+        tmp_link = str(link)
+        tmp_link2 = ''
+        if link:
+            for domain in self.domains:
+                if domain in tmp_link:
+                    tmp_link2 = tmp_link.replace(domain, '')
+                    if len(tmp_link2) > 0:
+                        return True
+
+        return False
+

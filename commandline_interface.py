@@ -37,7 +37,12 @@ if __name__ == '__main__':
         CLEAR()
 
     if not LINK:
-        LINK = input(' link: ')
+        try:
+            LINK = input(' link: ')
+
+        except GeneratorExit as erro:
+            print(erro)
+
 
     downloader = YouTubeDownloader(LINK, DIRECTORY)
 

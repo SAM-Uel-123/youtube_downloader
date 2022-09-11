@@ -54,7 +54,7 @@ class YouTubeDownloader:
 
     def download(self, only_audio = 0):
         log= 0
-        if type(self.link).__name__ == 'list' or Validation.val_link(self.link):
+        if type(self.link).__name__ == 'list' or self.input_validation.val_link(self.link):
             print('==' * 30, flush= True)
             if 'playlist' in self.link:
                 log= self.__playlist_download(self.link, self.directory, only_audio)
@@ -114,7 +114,7 @@ class YouTubeDownloader:
 
     def __audio_download(self, link, directory= './'):
         log= 0
-        if InputValidation.val_link(link):
+        if self.input_validation.val_link(link):
             try:
                 obj_youtube = YouTube(link, on_progress_callback = on_progress)
                 titulo = safe_filename(obj_youtube.title)
@@ -142,7 +142,7 @@ class YouTubeDownloader:
 
     def __playlist_download(self, link, directory= './', only_audio= 0 ):
         log= 0
-        if Validation.val_link(link):
+        if self.input_validation.val_link(link):
             obj_playlist = Playlist( link )
             print(f'Baixando a playlist: {obj_playlist.title}')
             if only_audio == 0:
@@ -218,7 +218,7 @@ class YouTubeDownloader:
 
             tmp_link = input('Novo link: ')
             if tmp_link:
-                if Validation.val_link(tmp_link):
+                if self.input_validation.val_link(tmp_link):
                     confirmar = self.input_validation.input_string(\
                         'Deseja confirmar o novo link? [S/N]: ',
                         ['s', 'n'], 1)
@@ -253,9 +253,13 @@ class YouTubeDownloader:
 
                     if confirmar == 's':
                         break
+                try:
+                    with open(file_addres, 'r', encoding='utf-8') as rarq:
+                        rarq.close()
 
-                with open(file_addres, 'r', encoding='utf-8') as rarq:
-                    rarq.close()
+                except FileNotFoundError as erro:
+                    print(erro)
+                    continue
 
                 linhas = []
                 with open(file_addres, 'r', encoding='utf-8') as rarq:
@@ -267,13 +271,15 @@ class YouTubeDownloader:
 
                     for linha in arq_reader:
                         if linha:
-                            if Validation.val_link(linha):
+                            if self.input_validation.val_link(linha):
                                 if '\n' in linha:
                                     linha = linha.replace('\n', '')
 
                                 linhas.append(linha)
 
                 self.link = linhas
+                return True
 
             except GeneratorExit as erro:
                 print(f'Error: {erro}')
+                
