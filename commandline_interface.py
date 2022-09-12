@@ -19,10 +19,10 @@ class Cli:
  Classe: Essa classe é feita para tratar de exibições
 no terminal
     """
-    def __init__(self):
+    def __init__(self) -> None:
         return None
 
-    def linhas(self, msg : str = '', linha : str = '='):
+    def linhas(self, msg : str = '', linha : str = '=') -> None:
         """
     Função: Cria uma divisoria para uma mensagem
  com uma linha em cima e em baixo e no centro a mensagem desejada.
@@ -40,7 +40,7 @@ no terminal
         print(linha * 60)
 
 
-    def clear(self = None):
+    def clear(self = None) -> None:
         """
  Função: limpa o terminal, removendo as mensagens antigas,
 igual o comando "clear" no Linux ou "cls" no Windows

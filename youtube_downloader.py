@@ -200,10 +200,14 @@ salvar os arquivos
         return log
 
 
-    def change_directory(self, limpar : int = 1) -> None:
+    def change_directory(self, tmp_directory : str = '', limpar : int = 1) -> None:
         """
     Função: Responsavel por definir o diretorio de saida, onde sua midia será baixada.
         """
+        if tmp_directory:
+            self.directory = tmp_directory
+            return
+
         while True:
             if limpar:
                 self.clear()
@@ -212,6 +216,7 @@ salvar os arquivos
                 print(f' O diretorio atual é: {self.directory}')
 
             tmp_directory = input('Novo diretorio: ')
+
             if tmp_directory:
                 if isdir(tmp_directory):
                     confirmar = self.input_validation.input_string(\
@@ -242,10 +247,14 @@ salvar os arquivos
                     break
 
 
-    def change_link(self, limpar : int = 1, atualizar_caches : int = 0) -> None:
+    def change_link(self, tmp_link: str = '', limpar : int = 1, atualizar_caches : int = 0) -> None:
         """
     Função: Responsavel por (re)definir o link que será usado para baixar sua midia.
         """
+        if tmp_link:
+            self.link = tmp_link
+            return
+
         while True:
             if limpar:
                 self.clear()
@@ -253,7 +262,9 @@ salvar os arquivos
             if self.link:
                 print(f' O link atual é: {self.link}')
 
+
             tmp_link = input('Novo link: ')
+
             if tmp_link:
                 if self.input_validation.val_link(tmp_link):
                     confirmar = self.input_validation.input_string(\
@@ -279,28 +290,34 @@ salvar os arquivos
                     break
 
 
-    def read_file(self) -> list:
+    def read_file(self, file_addres : str = '') -> list:
         """
     Função: Responsavel por ler um arquivo TXT ou CSV para coletar links de downloads do YouTube.
  retornando uma lista com os links.
         """
         while True:
             try:
-                file_addres = input('Endereco do arquivo: ')
                 if not file_addres:
-                    confirmar = self.input_validation.input_string(\
-                        'Deseja cancelar o link de download? [S/N]: ',
-                        ['s', 'n'], 0)
+                    file_addres = input('Endereco do arquivo: ')
 
-                    if confirmar == 's':
-                        break
-                try:
-                    with open(file_addres, 'r', encoding='utf-8') as rarq:
-                        rarq.close()
+                    if not file_addres:
+                        confirmar = self.input_validation.input_string(\
+                            'Deseja cancelar o link de download? [S/N]: ',
+                            ['s', 'n'], 0)
 
-                except FileNotFoundError as erro:
-                    print(erro)
-                    continue
+                        if confirmar == 's':
+                            break
+
+                        continue
+
+                else:
+                    try:
+                        with open(file_addres, 'r', encoding='utf-8') as rarq:
+                            rarq.close()
+
+                    except FileNotFoundError as erro:
+                        print(erro)
+                        continue
 
                 linhas = []
                 with open(file_addres, 'r', encoding='utf-8') as rarq:
@@ -313,8 +330,7 @@ salvar os arquivos
                     for linha in arq_reader:
                         if linha:
                             if self.input_validation.val_link(linha):
-                                if '\n' in linha:
-                                    linha = linha.replace('\n', '')
+                                linha = linha.replace('\n', '')
 
                                 linhas.append(linha)
 
