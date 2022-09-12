@@ -1,6 +1,4 @@
 #pylint: disable=missing-module-docstring
-#pylint: disable=missing-class-docstring
-#pylint: disable=missing-function-docstring
 #pylint: disable=import-error
 
 import csv
@@ -13,7 +11,18 @@ from function_validation import InputValidation
 
 
 class YouTubeDownloader:
-    def __init__(self, link, directory):
+    """
+    Classe: Essa classe trata de receber um endereço e baixar o arquivo.
+
+    Ex.:
+ > Obj = YouTubeDownloader(URL, Endereco_salvar_o_arquivo)
+ > obj.download()
+
+    e começa a baixar o video, passando somente como parametros, URL e endereço para
+salvar os arquivos
+
+    """
+    def __init__(self, link : str, directory : str) -> int:
         self.clear = lambda: system('clear')
         self.titulo= ''
         self.directory = directory
@@ -23,7 +32,12 @@ class YouTubeDownloader:
             self.__atualizar_caches()
 
 
-    def __atualizar_caches(self):
+    def __atualizar_caches(self) -> int:
+        """
+    Função: Ela é responsavel por tratar as informações do video/audio que você for
+ baixar do youtube, ela que é responsavel por salvar os titulos por exemplo.
+
+        """
         obj_youtube= None
         titulo= ''
         link = self.link
@@ -52,7 +66,12 @@ class YouTubeDownloader:
                 self.titulo.append(titulo)
 
 
-    def download(self, only_audio = 0):
+    def download(self, only_audio : int = 0) -> int:
+        """
+    Função: Principal, essa função é responsavel por analizar o link passado por argumento
+ e identificar o modo de baixa-lo, se é uma Playlist, se é 1 video, ou 1 audio.
+
+        """
         log= 0
         if type(self.link).__name__ == 'list' or self.input_validation.val_link(self.link):
             print('==' * 30, flush= True)
@@ -83,7 +102,11 @@ class YouTubeDownloader:
         return log
 
 
-    def __video_download(self, link, directory= './'):
+    def __video_download(self, link : str, directory : str = './') -> int:
+        """
+    Função: Responsavel por baixar somente videos, qualquer URL passada para ela, será
+ tratada como se fosse um video.
+        """
         log= 0
         erro = None
         if self.input_validation.val_link(link):
@@ -112,7 +135,11 @@ class YouTubeDownloader:
         return log
 
 
-    def __audio_download(self, link, directory= './'):
+    def __audio_download(self, link : str, directory : str = './') -> int:
+        """
+    Função: Responsavel por baixar somente audios, qualquer URL passada para ela, será tratada
+ como se fosse somente um audio.
+        """
         log= 0
         if self.input_validation.val_link(link):
             try:
@@ -140,7 +167,11 @@ class YouTubeDownloader:
         return log
 
 
-    def __playlist_download(self, link, directory= './', only_audio= 0 ):
+    def __playlist_download(self, link : str, directory : str = './', only_audio : int = 0 ) -> int:
+        """
+    Função: Responsavel por baixar somente Playlists, qualquer URL passada para ela será tratada
+ como se fosse somente uma Playlist.
+        """
         log= 0
         if self.input_validation.val_link(link):
             obj_playlist = Playlist( link )
@@ -169,7 +200,10 @@ class YouTubeDownloader:
         return log
 
 
-    def change_directory(self, limpar = 1):
+    def change_directory(self, limpar : int = 1) -> None:
+        """
+    Função: Responsavel por definir o diretorio de saida, onde sua midia será baixada.
+        """
         while True:
             if limpar:
                 self.clear()
@@ -208,7 +242,10 @@ class YouTubeDownloader:
                     break
 
 
-    def change_link(self, limpar = 1, atualizar_caches= 0):
+    def change_link(self, limpar : int = 1, atualizar_caches : int = 0) -> None:
+        """
+    Função: Responsavel por (re)definir o link que será usado para baixar sua midia.
+        """
         while True:
             if limpar:
                 self.clear()
@@ -242,7 +279,11 @@ class YouTubeDownloader:
                     break
 
 
-    def read_file(self):
+    def read_file(self) -> list:
+        """
+    Função: Responsavel por ler um arquivo TXT ou CSV para coletar links de downloads do YouTube.
+ retornando uma lista com os links.
+        """
         while True:
             try:
                 file_addres = input('Endereco do arquivo: ')

@@ -1,6 +1,4 @@
 #pylint: disable=missing-module-docstring
-#pylint: disable=missing-class-docstring
-#pylint: disable=missing-function-docstring
 
 # ============================== #
 #       - Importações -          #
@@ -10,24 +8,52 @@ from os import system
 from youtube_downloader import YouTubeDownloader
 from function_validation import InputValidation
 
+
+
+# ================================= #
+# - Classe de detalhes para a CLI - #
+# ================================= #
+
 class Cli:
+    """
+ Classe: Essa classe é feita para tratar de exibições
+no terminal
+    """
     def __init__(self):
         return None
 
-    def linhas(self, msg= '', linha= '='):
+    def linhas(self, msg : str = '', linha : str = '='):
+        """
+    Função: Cria uma divisoria para uma mensagem
+ com uma linha em cima e em baixo e no centro a mensagem desejada.
+
+ Ex.: Cli.linhas('Hello, World!')
+
+ Output:
+  ==================
+    Hello, World!
+  ==================
+
+        """
         print(linha * 60)
         print(f'{msg:^60}')
         print(linha * 60)
 
 
     def clear(self = None):
+        """
+ Função: limpa o terminal, removendo as mensagens antigas,
+igual o comando "clear" no Linux ou "cls" no Windows
+        """
         system('clear')
 
 
 if __name__ == '__main__':
+
     # =============================== #
     # - Variaveis e objetos globais - #
     # =============================== #
+
     CLEAR = Cli.clear
     LINK = None
     DIRECTORY = './'
@@ -43,9 +69,7 @@ if __name__ == '__main__':
         except GeneratorExit as erro:
             print(erro)
 
-
     downloader = YouTubeDownloader(LINK, DIRECTORY)
-
 
     # ================== #
     # - Loop principal - #
@@ -59,6 +83,7 @@ if __name__ == '__main__':
         # ==================================================== #
         # - Mostra o(s) titulo(s) do LINK(s) que você passou - #
         # ==================================================== #
+
         if downloader.titulo:
             print('\n', '-=' * 30)
             if type(downloader.titulo).__name__ == 'str':
@@ -73,6 +98,7 @@ if __name__ == '__main__':
         #===================================== #
         # - Opções para baixar o video/audio - #
         # ==================================== #
+
         print('''
 1 - Baixar Video(s)
 2 - Baixar Audios(s)    
@@ -88,7 +114,7 @@ if __name__ == '__main__':
         if opc == 0:
             break
 
-        elif opc == 1:
+        if opc == 1:
             downloader.download()
 
         elif opc == 2:
